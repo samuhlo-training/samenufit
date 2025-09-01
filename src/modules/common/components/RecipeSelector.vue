@@ -5,7 +5,7 @@
     @click="closeModal"
   >
     <div
-      class="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[80vh] overflow-hidden"
+      class="bg-white/40 backdrop-blur-md border border-white/20 rounded-lg shadow-lg max-w-2xl w-full max-h-[80vh] overflow-hidden"
       @click.stop
     >
       <!-- Header -->
@@ -16,7 +16,7 @@
           </h2>
           <button
             @click="closeModal"
-            class="text-gray-400 hover:text-gray-600 transition-colors"
+            class="text-text-main-color hover:text-[var(--accent-color)] transition-colors cursor-pointer"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Recipe List -->
-      <div class="px-6 py-4 overflow-y-auto max-h-96">
+      <div class="px-6 py-4 overflow-y-auto max-h-fit">
         <div class="space-y-3">
           <div
             v-for="recipe in filteredRecipes"
@@ -49,26 +49,19 @@
                 </p>
               </div>
               <div class="ml-4 text-right">
-                <div class="bg-[var(--accent-color)] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <div
+                  class="bg-[var(--accent-color)] text-white px-3 py-1 rounded-full text-sm font-semibold"
+                >
                   {{ recipe.macros.calories }} kcal
                 </div>
                 <div class="text-xs text-text-main-color/60 mt-1">
-                  P: {{ recipe.macros.protein }}g | C: {{ recipe.macros.carbs }}g | G: {{ recipe.macros.fat }}g
+                  P: {{ recipe.macros.protein }}g | C: {{ recipe.macros.carbs }}g | G:
+                  {{ recipe.macros.fat }}g
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
-        <button
-          @click="closeModal"
-          class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          Cancelar
-        </button>
       </div>
     </div>
   </div>
@@ -93,7 +86,7 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const filteredRecipes = computed(() => {
-  return initialRecipes.filter(recipe => recipe.type === props.recipeType);
+  return initialRecipes.filter((recipe) => recipe.type === props.recipeType);
 });
 
 const closeModal = () => {

@@ -1,14 +1,7 @@
 <template>
   <div class="container mx-auto flex flex-col justify-center items-center">
-    <div class="flex items-center justify-between w-full max-w-4xl mb-7">
+    <div class="flex items-center justify-center w-full max-w-4xl mb-7">
       <h1 class="text-4xl mona-sans-custom ml-7 uppercase font-bold">Plan Semanal</h1>
-      <button
-        @click="resetToDefault"
-        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
-        title="Resetear a plan por defecto"
-      >
-        Resetear Plan
-      </button>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       <DayCard
@@ -21,7 +14,7 @@
         @replace-recipe="handleReplaceRecipe"
       />
     </div>
-    
+
     <!-- Recipe Selector Modal -->
     <RecipeSelector
       :is-visible="selectorModal.isVisible"
@@ -47,23 +40,27 @@ interface SelectorModal {
 }
 
 // Usar el composable para manejar el almacenamiento persistente
-const { weeklyPlan, updateRecipe, resetToDefault } = useWeeklyPlanStorage();
+const { weeklyPlan, updateRecipe } = useWeeklyPlanStorage();
 
 // Modal del selector de recetas
 const selectorModal = ref<SelectorModal>({
   isVisible: false,
   recipeType: 'Almuerzo',
   targetDay: '',
-  targetMealType: 'lunch'
+  targetMealType: 'lunch',
 });
 
 // Manejar el evento de reemplazar receta
-const handleReplaceRecipe = (data: { day: string; mealType: 'lunch' | 'dinner'; recipeType: 'Almuerzo' | 'Cena' }) => {
+const handleReplaceRecipe = (data: {
+  day: string;
+  mealType: 'lunch' | 'dinner';
+  recipeType: 'Almuerzo' | 'Cena';
+}) => {
   selectorModal.value = {
     isVisible: true,
     recipeType: data.recipeType,
     targetDay: data.day,
-    targetMealType: data.mealType
+    targetMealType: data.mealType,
   };
 };
 
@@ -74,12 +71,8 @@ const closeSelectorModal = () => {
 
 // Manejar la selección de receta
 const handleRecipeSelection = (selectedRecipe: Recipe) => {
-  updateRecipe(
-    selectorModal.value.targetDay, 
-    selectorModal.value.targetMealType, 
-    selectedRecipe
-  );
-  
+  updateRecipe(selectorModal.value.targetDay, selectorModal.value.targetMealType, selectedRecipe);
+
   closeSelectorModal();
 };
 </script>
