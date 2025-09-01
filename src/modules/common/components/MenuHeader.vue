@@ -2,8 +2,9 @@
   <header
     class="my-5 mx-auto max-w-7xl w-full rounded-lg bg-white/50 backdrop-blur-lg border border-white/20 shadow-lg"
   >
-    <nav class="flex items-center justify-between px-8 py-4">
-      <div class="flex items-center space-x-6">
+    <nav class="relative flex items-center justify-center px-8 py-4">
+      <!-- Enlaces izquierdos -->
+      <div class="absolute left-8 flex items-center space-x-6">
         <router-link
           v-for="link in leftLinks"
           :key="link.to"
@@ -15,11 +16,13 @@
         </router-link>
       </div>
 
+      <!-- Logo centrado -->
       <div class="flex-shrink-0">
         <img :src="logo" alt="Logo de SAMENUFIT" class="h-8 w-auto" />
       </div>
 
-      <div class="flex items-center space-x-6">
+      <!-- Enlaces derechos -->
+      <div class="absolute right-8 flex items-center space-x-6">
         <router-link
           v-for="link in rightLinks"
           :key="link.to"
