@@ -1,21 +1,32 @@
 <template>
   <!-- Empty state -->
-  <div v-if="!recipe" class="bg-[#fff3e3] rounded-lg shadow-sm overflow-hidden min-w-[22rem] border-2 border-dashed border-[var(--accent-color)]/30">
+  <div
+    v-if="!recipe"
+    class="bg-[#fff3e3] rounded-lg shadow-sm overflow-hidden min-w-[22rem] border-2 border-dashed border-[var(--accent-color)]/30"
+  >
     <button
       @click="handleEmptyClick"
       class="w-full p-6 flex flex-col items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer text-center"
     >
       <div class="mb-2">
-        <svg class="w-8 h-8 text-[var(--accent-color)] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        <svg
+          class="w-8 h-8 text-[var(--accent-color)] mx-auto"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+          />
         </svg>
       </div>
-      <div class="text-[var(--accent-color)] font-semibold mona-sans-custom uppercase">
+      <div class="text-[var(--text-main-color)] font-semibold mona-sans-custom uppercase">
         Seleccionar {{ mealTypeText }}
       </div>
-      <div class="text-text-main-color/60 text-sm mt-1">
-        Haz clic para elegir una receta
-      </div>
+      <div class="text-text-main-color/60 text-sm mt-1">Haz clic para elegir una receta</div>
     </button>
   </div>
 
@@ -60,20 +71,22 @@
       <div class="mb-4">
         <h4 class="font-semibold text-text-main-color mb-2">Ingredientes:</h4>
         <div class="space-y-1 text-sm text-text-main-color/80">
-          <div 
-            v-for="ingredient in recipe.ingredients" 
+          <div
+            v-for="ingredient in recipe.ingredients"
             :key="ingredient.id"
             class="flex justify-between"
           >
-            <span 
+            <span
               :class="{
-                'underline decoration-[var(--accent-color)] decoration-2 decoration-wavy': ingredient.category === 'Proteína'
+                'underline decoration-[var(--accent-color)] decoration-2 decoration-wavy':
+                  ingredient.category === 'Proteína',
               }"
             >
               {{ ingredient.name }}
             </span>
             <span class="font-medium">
-              {{ ingredient.quantity }}{{ ingredient.unit === 'unidad(es)' ? 'u' : ingredient.unit }}
+              {{ ingredient.quantity
+              }}{{ ingredient.unit === 'unidad(es)' ? 'u' : ingredient.unit }}
             </span>
           </div>
         </div>
@@ -92,7 +105,7 @@
         <div v-if="showReplaceButton" class="flex justify-end mt-4">
           <button
             @click="handleReplaceClick"
-            class="bg-[var(--accent-color)] p-2 rounded-full hover:bg-[var(--accent-color)]/80 transition-colors shadow-sm"
+            class="bg-[var(--text-main-color)] p-2 rounded-full hover:bg-[var(--accent-color)]/80 transition-colors shadow-sm"
           >
             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -126,7 +139,7 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   showReplaceButton: false,
-  mealType: 'lunch'
+  mealType: 'lunch',
 });
 
 const emit = defineEmits<Emits>();
