@@ -12,15 +12,20 @@ const getCategory = (name: string): IngredientCategory => {
     lowerName.includes('gambas') ||
     lowerName.includes('langostinos') ||
     lowerName.includes('camarones') ||
-    lowerName.includes('hamburguesa')
+    lowerName.includes('hamburguesa') ||
+    lowerName.includes('claras') ||
+    lowerName.includes('proteína')
   )
     return 'Proteína';
   if (
     lowerName.includes('arroz') ||
     lowerName.includes('taco') ||
     lowerName.includes('wrap') ||
-    lowerName.includes('patatas') ||
-    lowerName.includes('pasta')
+    lowerName.includes('patata') ||
+    lowerName.includes('pasta') ||
+    lowerName.includes('avena') ||
+    lowerName.includes('pan') ||
+    lowerName.includes('tortilla')
   )
     return 'Carbohidrato';
   if (

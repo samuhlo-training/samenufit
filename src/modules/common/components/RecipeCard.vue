@@ -79,7 +79,7 @@
             <span
               :class="{
                 'underline decoration-[var(--accent-color)] decoration-2 decoration-wavy':
-                  ingredient.category === 'Proteína',
+                  ingredient.category === 'Proteína' || ingredient.category === 'Carbohidrato',
               }"
             >
               {{ ingredient.name }}
