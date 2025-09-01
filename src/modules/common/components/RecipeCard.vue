@@ -1,5 +1,26 @@
 <template>
-  <div class="bg-[#fff3e3] rounded-lg shadow-sm overflow-hidden min-w-[22rem]">
+  <!-- Empty state -->
+  <div v-if="!recipe" class="bg-[#fff3e3] rounded-lg shadow-sm overflow-hidden min-w-[22rem] border-2 border-dashed border-[var(--accent-color)]/30">
+    <button
+      @click="handleEmptyClick"
+      class="w-full p-6 flex flex-col items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer text-center"
+    >
+      <div class="mb-2">
+        <svg class="w-8 h-8 text-[var(--accent-color)] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+      </div>
+      <div class="text-[var(--accent-color)] font-semibold mona-sans-custom uppercase">
+        Seleccionar {{ mealTypeText }}
+      </div>
+      <div class="text-text-main-color/60 text-sm mt-1">
+        Haz clic para elegir una receta
+      </div>
+    </button>
+  </div>
+
+  <!-- Recipe state -->
+  <div v-else class="bg-[#fff3e3] rounded-lg shadow-sm overflow-hidden min-w-[22rem]">
     <!-- Header del acordeón -->
     <button
       @click="toggleAccordion"
@@ -89,20 +110,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import type { Recipe } from '@/data/types';
 import MacroShow from './MacroShow.vue';
 
 interface Props {
-  recipe: Recipe;
+  recipe: Recipe | null;
   showReplaceButton?: boolean;
+  mealType?: 'lunch' | 'dinner';
 }
 
 interface Emits {
   (e: 'replace-recipe', recipeType: 'Almuerzo' | 'Cena'): void;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  showReplaceButton: false,
+  mealType: 'lunch'
+});
+
 const emit = defineEmits<Emits>();
 
 const isExpanded = ref(false);
@@ -112,6 +138,17 @@ const toggleAccordion = () => {
 };
 
 const handleReplaceClick = () => {
-  emit('replace-recipe', props.recipe.type as 'Almuerzo' | 'Cena');
+  if (props.recipe) {
+    emit('replace-recipe', props.recipe.type as 'Almuerzo' | 'Cena');
+  }
 };
+
+const handleEmptyClick = () => {
+  const recipeType = props.mealType === 'lunch' ? 'Almuerzo' : 'Cena';
+  emit('replace-recipe', recipeType);
+};
+
+const mealTypeText = computed(() => {
+  return props.mealType === 'lunch' ? 'Almuerzo' : 'Cena';
+});
 </script>

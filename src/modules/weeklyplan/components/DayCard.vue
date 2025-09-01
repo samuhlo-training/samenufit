@@ -4,11 +4,13 @@
     <RecipeCard 
       :recipe="lunchRecipe" 
       :show-replace-button="true"
+      meal-type="lunch"
       @replace-recipe="handleReplaceRecipe('lunch', $event)"
     />
     <RecipeCard 
       :recipe="dinnerRecipe" 
       :show-replace-button="true"
+      meal-type="dinner"
       @replace-recipe="handleReplaceRecipe('dinner', $event)"
     />
   </div>
@@ -20,8 +22,8 @@ import type { Recipe } from '@/data/types';
 
 interface Props {
   day: string;
-  lunchRecipe: Recipe;
-  dinnerRecipe: Recipe;
+  lunchRecipe: Recipe | null;
+  dinnerRecipe: Recipe | null;
 }
 
 interface Emits {

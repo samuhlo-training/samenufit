@@ -1,8 +1,23 @@
 <template>
   <div class="container mx-auto flex flex-col justify-center items-center">
-    <div class="flex items-center justify-center w-full max-w-4xl mb-7">
-      <h1 class="text-4xl mona-sans-custom ml-7 uppercase font-bold">Plan Semanal</h1>
+    <div class="flex flex-col gap-2 items-center justify-center w-full max-w-4xl mb-7">
+      <h1 class="text-4xl mona-sans-custom uppercase font-bold">Plan Semanal</h1>
+      <div class="flex gap-2">
+        <button
+          @click="fillWithSamples"
+          class="bg-[var(--accent-color)] hover:bg-[var(--accent-color)]/80 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium cursor-pointer"
+        >
+          Aleatorio
+        </button>
+        <button
+          @click="clearAll"
+          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium cursor-pointer"
+        >
+          Vaciar
+        </button>
+      </div>
     </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       <DayCard
         v-for="(dayPlan, index) in weeklyPlan"
@@ -26,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import DayCard from '@/modules/weeklyplan/components/DayCard.vue';
 import RecipeSelector from '@/modules/common/components/RecipeSelector.vue';
-import { useWeeklyPlanStorage } from '@/modules/weeklyplan/composables/useWeeklyPlanStorage';
+import { useWeeklyPlanStore } from '@/stores/weeklyPlan';
 import type { Recipe } from '@/data/types';
 
 interface SelectorModal {
@@ -39,8 +54,16 @@ interface SelectorModal {
   targetMealType: 'lunch' | 'dinner';
 }
 
-// Usar el composable para manejar el almacenamiento persistente
-const { weeklyPlan, updateRecipe } = useWeeklyPlanStorage();
+// Use the store
+const store = useWeeklyPlanStore();
+
+// Computed to get weekly plan in array format
+const weeklyPlan = computed(() => store.getAllDays());
+
+// Load from storage on mount
+onMounted(() => {
+  store.loadFromStorage();
+});
 
 // Modal del selector de recetas
 const selectorModal = ref<SelectorModal>({
@@ -69,10 +92,33 @@ const closeSelectorModal = () => {
   selectorModal.value.isVisible = false;
 };
 
-// Manejar la selección de receta
+// Handle recipe selection
 const handleRecipeSelection = (selectedRecipe: Recipe) => {
-  updateRecipe(selectorModal.value.targetDay, selectorModal.value.targetMealType, selectedRecipe);
+  const dayMap: Record<string, keyof typeof store.plan> = {
+    Lunes: 'monday',
+    Martes: 'tuesday',
+    Miércoles: 'wednesday',
+    Jueves: 'thursday',
+    Viernes: 'friday',
+    Sábado: 'saturday',
+    Domingo: 'sunday',
+  };
+
+  const dayKey = dayMap[selectorModal.value.targetDay];
+  if (dayKey) {
+    store.setMeal(dayKey, selectorModal.value.targetMealType, selectedRecipe);
+  }
 
   closeSelectorModal();
+};
+
+// Fill with sample recipes
+const fillWithSamples = () => {
+  store.fillWithSamples();
+};
+
+// Clear all recipes
+const clearAll = () => {
+  store.clearAll();
 };
 </script>
