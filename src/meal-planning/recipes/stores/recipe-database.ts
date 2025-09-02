@@ -240,7 +240,7 @@ export const recipeDatabase: Recipe[] = [
         name: 'Salsa de tomate natural',
         quantity: 1,
         unit: 'u',
-        category: getIngredientCategory('tomate'),
+        category: getIngredientCategory('salsa'),
       },
     ],
     macros: { calories: 511, protein: 57, carbs: 37, fat: 15 },
