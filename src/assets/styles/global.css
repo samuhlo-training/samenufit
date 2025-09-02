@@ -57,3 +57,8 @@ body {
 .text-accent {
   color: var(--accent-color);
 }
+
+/* Animaciones personalizadas */
+.-rotate-360 {
+  transform: rotate(-360deg);
+}

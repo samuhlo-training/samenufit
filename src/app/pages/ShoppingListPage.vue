@@ -2,7 +2,7 @@
   <div class="container mx-auto flex flex-col justify-center items-center">
     <!-- Header with action buttons -->
     <div class="flex flex-col gap-2 items-center justify-center w-full max-w-4xl mb-7">
-      <h1 class="text-4xl mona-sans-custom uppercase font-bold text-[#8b4513]">
+      <h1 class="text-4xl mona-sans-custom uppercase font-bold text-[#44200E]">
         Lista de la Compra
       </h1>
       <div v-if="shoppingList.length > 0" class="flex gap-2">
@@ -17,8 +17,8 @@
 
     <!-- Empty state -->
     <div v-if="shoppingList.length === 0" class="text-center py-12">
-      <p class="text-[#8b4513] text-lg mb-4">No hay elementos en la lista de compra.</p>
-      <p class="text-[#8b4513]/70">
+      <p class="text-[#44200E] text-lg mb-4">No hay elementos en la lista de compra.</p>
+      <p class="text-[#44200E]/70">
         Añade recetas a tu plan semanal y la lista se generará automáticamente.
       </p>
     </div>
@@ -36,9 +36,9 @@
       </div>
 
       <!-- Total Section -->
-      <div class="bg-[#fff3e3] rounded-xl shadow-md border border-[#8b4513]/10 p-6">
+      <div class="bg-[#fff3e3] rounded-xl shadow-md border border-[#44200E]/10 p-6">
         <div class="flex justify-between items-center">
-          <span class="text-3xl mona-sans-custom font-bold text-[#8b4513] uppercase"
+          <span class="text-3xl mona-sans-custom font-bold text-[#44200E] uppercase"
             >Total Aprox:</span
           >
           <div class="text-right">

@@ -74,10 +74,7 @@
       leave-from-class="opacity-100 translate-y-0 max-h-96"
       leave-to-class="opacity-0 -translate-y-2 max-h-0"
     >
-      <div
-        v-if="isMobileMenuOpen"
-        class="md:hidden bg-white/50 backdrop-blur-lg border-t border-white/20 shadow-sm overflow-hidden"
-      >
+      <div v-if="isMobileMenuOpen" class="md:hidden rounded-lg m-2 overflow-hidden">
         <nav class="flex flex-col p-6 space-y-4">
           <router-link
             v-for="link in allLinks"

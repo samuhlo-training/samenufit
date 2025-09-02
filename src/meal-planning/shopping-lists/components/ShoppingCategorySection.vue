@@ -1,13 +1,13 @@
 <template>
   <div class="bg-[#fff3e3] rounded-xl shadow-md p-6 mb-4">
-    <h2 class="text-xl mona-sans-custom font-bold mb-4 uppercase text-[#8b4513] pb-2">
+    <h2 class="font-bold mona-sans-custom text-lg text-text-main-color uppercase pb-2 mb-3">
       {{ categoryName }}
     </h2>
 
     <div class="space-y-3">
       <div v-for="item in items" :key="item.id" class="flex justify-between items-center px-3">
-        <span class="text-[#8b4513] font-medium">{{ item.name }}</span>
-        <span class="text-[#8b4513] font-semibold">{{ formatQuantity(item) }}</span>
+        <span class="text-[#44200E] font-medium">{{ item.name }}</span>
+        <span class="text-[#44200E] font-semibold">{{ formatQuantity(item) }}</span>
       </div>
     </div>
 
