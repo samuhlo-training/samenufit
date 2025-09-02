@@ -12,7 +12,7 @@ export interface Ingredient {
   id: string;
   name: string;
   quantity: number;
-  unit: 'g' | 'ml' | 'unidad(es)';
+  unit: 'g' | 'ml' | 'u';
   category: IngredientCategory;
   pricePerUnit?: number; // Opcional, para calcular el coste
 }

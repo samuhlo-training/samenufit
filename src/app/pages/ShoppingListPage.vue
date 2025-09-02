@@ -150,7 +150,7 @@ const calculateCategoryTotal = (items: { name: string; totalQuantity: number; un
     let unitMultiplier = 1;
     if (item.unit === 'g') unitMultiplier = 0.001;
     else if (item.unit === 'ml') unitMultiplier = 0.001;
-    else if (item.unit === 'unidad(es)') unitMultiplier = 1;
+    else if (item.unit === 'u') unitMultiplier = 1;
 
     return sum + basePrice * quantity * unitMultiplier;
   }, 0);

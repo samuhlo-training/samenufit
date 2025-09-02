@@ -4,17 +4,17 @@
       {{ categoryName }}
     </h2>
 
-    <div class="space-y-3 mb-4">
-      <div v-for="item in items" :key="item.id" class="flex justify-between items-center py-2 px-3">
+    <div class="space-y-3">
+      <div v-for="item in items" :key="item.id" class="flex justify-between items-center px-3">
         <span class="text-[#8b4513] font-medium">{{ item.name }}</span>
         <span class="text-[#8b4513] font-semibold">{{ formatQuantity(item) }}</span>
       </div>
     </div>
 
     <!-- Category total price -->
-    <div class="mt-4 pt-3">
+    <div class="mt-3 pt-3">
       <div class="flex justify-end">
-        <span class="text-xl font-bold text-[var(--accent-color)] px-3 py-1 rounded-lg">
+        <span class="text-xl font-bold text-[var(--accent-color)] px-3 rounded-lg">
           {{ formatCategoryTotal(items) }}€
         </span>
       </div>
@@ -34,7 +34,7 @@ defineProps<Props>();
 
 // Format quantity with unit
 const formatQuantity = (item: ShoppingListItem) => {
-  return `${item.totalQuantity} ${item.unit}`;
+  return `${item.totalQuantity}${item.unit}`;
 };
 
 // Calculate category total based on individual item prices
@@ -101,7 +101,7 @@ const formatCategoryTotal = (items: ShoppingListItem[]) => {
     let unitMultiplier = 1;
     if (item.unit === 'g') unitMultiplier = 0.001;
     else if (item.unit === 'ml') unitMultiplier = 0.001;
-    else if (item.unit === 'unidad(es)') unitMultiplier = 1;
+    else if (item.unit === 'u') unitMultiplier = 1;
 
     return sum + basePrice * quantity * unitMultiplier;
   }, 0);

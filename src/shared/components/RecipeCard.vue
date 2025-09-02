@@ -85,8 +85,7 @@
               {{ ingredient.name }}
             </span>
             <span class="font-medium">
-              {{ ingredient.quantity
-              }}{{ ingredient.unit === 'unidad(es)' ? 'u' : ingredient.unit }}
+              {{ ingredient.quantity }}{{ ingredient.unit === 'u' ? 'u' : ingredient.unit }}
             </span>
           </div>
         </div>

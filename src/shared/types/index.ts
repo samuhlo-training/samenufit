@@ -14,7 +14,7 @@ export interface Ingredient {
   id: string;
   name: string;
   quantity: number;
-  unit: 'g' | 'ml' | 'unidad(es)';
+  unit: 'g' | 'ml' | 'u';
   category: IngredientCategory;
   pricePerUnit?: number; // Opcional, para calcular el coste
 }
@@ -40,7 +40,14 @@ export interface Recipe {
 
 // Tipos de comida
 export type MealType = 'lunch' | 'dinner';
-export type DayOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+export type DayOfWeek =
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
+  | 'sunday';
 
 // Represents a specific meal in a day (Lunch or Dinner)
 export interface Meal {
