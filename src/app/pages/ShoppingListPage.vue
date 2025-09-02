@@ -8,11 +8,34 @@
       <div v-if="shoppingList.length > 0" class="flex gap-2">
         <button
           @click="exportList"
-          class="bg-[var(--accent-color)] text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+          class="bg-[var(--primary-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
         >
           Exportar
         </button>
+        <button
+          @click="copyToClipboard"
+          class="border border-[var(--text-main-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
+        >
+          Copiar
+        </button>
       </div>
+
+      <!-- Mensaje de confirmación de copiado -->
+      <Transition
+        enter-active-class="transition-all duration-300 ease-out"
+        enter-from-class="opacity-0 transform -translate-y-2"
+        enter-to-class="opacity-100 transform translate-y-0"
+        leave-active-class="transition-all duration-300 ease-in"
+        leave-from-class="opacity-100 transform translate-y-0"
+        leave-to-class="opacity-0 transform -translate-y-2"
+      >
+        <div
+          v-if="showCopiedMessage"
+          class="bg-[var(--secondary-color)] text-[var(--text-main-color)] px-4 py-2 rounded-full text-sm font-semibold shadow-lg mt-2"
+        >
+          ✓ Lista copiada al portapapeles
+        </div>
+      </Transition>
     </div>
 
     <!-- Empty state -->
@@ -52,13 +75,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useShoppingList } from '@/meal-planning/shopping-lists';
 import { useWeeklyPlan } from '@/meal-planning/weekly-plans';
 import ShoppingCategorySection from '@/meal-planning/shopping-lists/components/ShoppingCategorySection.vue';
 
 const { generateShoppingList, groupByCategory, formatForExport } = useShoppingList();
 const { getAllPlannedMeals, init } = useWeeklyPlan();
+
+// Estado para el mensaje de copiado
+const showCopiedMessage = ref(false);
 
 // Initialize weekly plan on mount
 onMounted(() => {
@@ -177,5 +203,49 @@ const exportList = () => {
   link.download = 'lista-compra.txt';
   link.click();
   URL.revokeObjectURL(url);
+};
+
+// Copy shopping list to clipboard
+const copyToClipboard = async () => {
+  try {
+    const formatted = formatForExport(shoppingList.value, 'text');
+    await navigator.clipboard.writeText(formatted);
+
+    // Mostrar mensaje de confirmación
+    showCopiedMessage.value = true;
+
+    // Ocultar mensaje después de 2 segundos
+    setTimeout(() => {
+      showCopiedMessage.value = false;
+    }, 2000);
+  } catch (error) {
+    console.error('Error al copiar al portapapeles:', error);
+    // Fallback para navegadores que no soportan clipboard API
+    fallbackCopyToClipboard(formatForExport(shoppingList.value, 'text'));
+  }
+};
+
+// Fallback method for older browsers
+const fallbackCopyToClipboard = (text: string) => {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-999999px';
+  textArea.style.top = '-999999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    document.execCommand('copy');
+    showCopiedMessage.value = true;
+    setTimeout(() => {
+      showCopiedMessage.value = false;
+    }, 2000);
+  } catch (error) {
+    console.error('Error en el método fallback de copia:', error);
+  }
+
+  document.body.removeChild(textArea);
 };
 </script>

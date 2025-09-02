@@ -19,7 +19,7 @@
 
       <!-- Logo centrado -->
       <div class="flex-shrink-0">
-        <img :src="logo" alt="Logo de SAMENUFIT" class="h-8 w-auto" />
+        <img :src="logo" alt="Logo de SAMENUFIT" class="h-8 w-auto logo-hover" />
       </div>
 
       <!-- Enlaces derechos -->
@@ -40,7 +40,7 @@
     <nav class="flex md:hidden items-center justify-between px-6 py-4">
       <!-- Logo -->
       <div class="flex-shrink-0">
-        <img :src="logo" alt="Logo de SAMENUFIT" class="h-8 w-auto" />
+        <img :src="logo" alt="Logo de SAMENUFIT" class="h-8 w-auto logo-hover" />
       </div>
 
       <!-- Hamburger Button -->
@@ -168,5 +168,49 @@ const closeMobileMenu = () => {
 
 .mobile-nav-link.router-link-active {
   color: var(--text-main-color);
+}
+
+/* Efecto de rotación y shaking para el logo */
+.logo-hover {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.logo-hover:hover {
+  animation: logo-shake 0.6s ease-in-out;
+}
+
+@keyframes logo-shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(-5deg) scale(1.05);
+  }
+  20% {
+    transform: rotate(5deg) scale(1.05);
+  }
+  30% {
+    transform: rotate(-3deg) scale(1.02);
+  }
+  40% {
+    transform: rotate(3deg) scale(1.02);
+  }
+  50% {
+    transform: rotate(-2deg) scale(1.01);
+  }
+  60% {
+    transform: rotate(2deg) scale(1.01);
+  }
+  70% {
+    transform: rotate(-1deg) scale(1.005);
+  }
+  80% {
+    transform: rotate(1deg) scale(1.005);
+  }
+  90% {
+    transform: rotate(0deg) scale(1);
+  }
 }
 </style>

@@ -5,13 +5,13 @@
       <div class="flex gap-2">
         <button
           @click="fillWithSamples"
-          class="bg-[var(--accent-color)] hover:bg-[var(--accent-color)]/80 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium cursor-pointer"
+          class="bg-[var(--primary-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
         >
           Aleatorio
         </button>
         <button
           @click="clearAll"
-          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium cursor-pointer"
+          class="border border-[var(--text-main-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
         >
           Vaciar
         </button>
@@ -96,7 +96,10 @@ const closeSelectorModal = () => {
 
 // Handle recipe selection
 const handleRecipeSelection = (selectedRecipe: Recipe) => {
-  const dayMap: Record<string, 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'> = {
+  const dayMap: Record<
+    string,
+    'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
+  > = {
     Lunes: 'monday',
     Martes: 'tuesday',
     Miércoles: 'wednesday',
@@ -116,13 +119,14 @@ const handleRecipeSelection = (selectedRecipe: Recipe) => {
 
 // Fill with sample recipes
 const fillWithSamples = () => {
-  const days: Array<'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'> = 
-    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  
-  days.forEach(day => {
+  const days: Array<
+    'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
+  > = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+  days.forEach((day) => {
     const lunchRecipe = getRandomRecipeByType('Almuerzo');
     const dinnerRecipe = getRandomRecipeByType('Cena');
-    
+
     if (lunchRecipe) setMeal(day, 'lunch', lunchRecipe);
     if (dinnerRecipe) setMeal(day, 'dinner', dinnerRecipe);
   });
