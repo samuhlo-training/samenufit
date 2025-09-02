@@ -1,147 +1,157 @@
-# SamenuFit: Intelligent Meal Planning & Nutrition Assistant
+# 🍽️ SaMenufit
 
-[![Vue 3](https://img.shields.io/badge/Vue-3-brightgreen)](https://vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-7.0-purple)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC)](https://tailwindcss.com/)
+_Tu asistente inteligente para planificación de comidas y nutrición_
 
-## Overview
-
-SamenuFit is an advanced meal planning and nutrition tracking application designed to simplify your dietary management. Built with modern web technologies, it offers an intuitive interface for planning meals, managing recipes, generating shopping lists, and tracking nutritional intake.
-
-## Key Features
-
-- 📅 **Weekly Meal Planning**
-  - Drag & drop interface for easy meal scheduling
-  - Intelligent recipe recommendations
-  - Nutritional balance tracking
-
-- 🍲 **Recipe Management**
-  - Create and store personalized recipes
-  - Detailed nutritional information
-  - Easy recipe import and export
-
-- 🛒 **Automated Shopping Lists**
-  - Generate shopping lists from weekly meal plans
-  - Ingredient consolidation
-  - Customizable preferences
-
-- 📊 **Nutrition Tracking**
-  - Macro and micronutrient calculation
-  - Unit conversion tools
-  - Visual nutritional insights
-
-## Technology Stack
-
-- **Frontend**: Vue 3 (Composition API)
-- **Language**: TypeScript
-- **State Management**: Pinia
-- **Routing**: Vue Router
-- **Styling**: Tailwind CSS v4
-- **Build Tool**: Vite
-- **Package Manager**: Bun
-
-## Architecture Principles
-
-SamenuFit follows **Screaming Architecture** with Domain-Driven Design:
-
-- **Bounded Contexts**:
-  - Meal Planning
-  - Recipe Management
-  - Nutrition Tracking
-
-- **Architectural Layers**:
-  - Domain Layer
-  - Infrastructure Layer
-  - Shared Kernel
-  - Application Layer
-
-## Prerequisites
-
-- Node.js: ^20.19.0 or >=22.12.0
-- Bun package manager
-
-## Installation & Setup
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/samenufit.git
-cd samenufit
-```
-
-2. Install dependencies
-```bash
-bun install
-```
-
-## Development Commands
-
-- Start development server
-```bash
-bun dev
-```
-
-- Build for production
-```bash
-bun run build
-```
-
-- Run type checking
-```bash
-bun run type-check
-```
-
-- Lint and fix code
-```bash
-bun lint
-```
-
-- Format code
-```bash
-bun run format
-```
-
-## Project Structure
-
-```
-src/
-├── modules/
-│   ├── common/       # Shared components
-│   ├── landing/      # Landing page
-│   ├── weeklyplan/   # Meal planning
-│   ├── recipebook/   # Recipe management
-│   ├── shoppinglist/ # Shopping list generation
-│   └── conversiontab/# Unit conversions
-├── router/           # Vue Router configuration
-├── stores/           # Pinia stores
-├── assets/           # Static assets
-└── data/             # Static data files
-```
-
-## Recommended IDE
-
-- Visual Studio Code
-- Install [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension
-- Disable Vetur extension
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information.
-
-## License
-
-[Insert License Information]
-
-## Contact
-
-[Your Contact Information or Project Maintainer Details]
+[![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?style=flat-square&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
 ---
 
-Built with passion using modern web technologies. 🚀
+## 📖 Descripción
+
+**SaMenufit** es una aplicación web que simplifica la gestión de mi menu diario, siguiendo recetas de [Doctor Mike Diamonds](https://www.youtube.com/@DoctorMikeDiamonds). Me ayuda a hacer la lista de la compra y no pasarme de calorias. Creado como proyecto para poner en practica lo aprendido de Vue.
+
+## ✨ Características Principales
+
+### 📅 **Planificación Semanal**
+
+- Interfaz visual para programar comidas
+- Creacion aleatoria
+- Seguimiento del equilibrio nutricional
+
+### 🍲 **Gestión de Recetas**
+
+- Crea y almacena tus recetas personalizadas
+- Información nutricional detallada
+- Importación y exportación de recetas
+
+### 🛒 **Listas de Compra Inteligentes**
+
+- Generación automática desde el plan semanal
+- Consolidación de ingredientes
+
+### 📊 **Seguimiento Nutricional**
+
+- Cálculo de macros y micronutrientes
+- Visualización de datos nutricionales
+
+## 🛠️ Stack Tecnológico
+
+| Tecnología       | Versión   | Propósito                              |
+| ---------------- | --------- | -------------------------------------- |
+| **Vue 3**        | `^3.5.18` | Framework frontend con Composition API |
+| **TypeScript**   | -         | Tipado estático y mejor DX             |
+| **Pinia**        | `^3.0.3`  | Gestión de estado                      |
+| **Vue Router**   | `^4.5.1`  | Enrutamiento SPA                       |
+| **Tailwind CSS** | `^4.1.12` | Estilos y diseño responsive            |
+| **Vite**         | -         | Herramienta de construcción            |
+| **Bun**          | -         | Gestor de paquetes ultrarrápido        |
+
+## 🏗️ Arquitectura
+
+SamenuFit implementa **Screaming Architecture** con principios de **Domain-Driven Design**:
+
+```
+📁 Contextos Delimitados
+├── 🍽️ meal-planning/     # Planificación de comidas
+├── 📚 recipes/           # Gestión de recetas
+├── 🛒 shopping-lists/    # Listas de compra
+└── 🔄 shared/           # Kernel compartido
+```
+
+## 🚀 Inicio Rápido
+
+### Requisitos Previos
+
+- **Node.js**: `^20.19.0` o `>=22.12.0`
+- **Bun**: Gestor de paquetes
+
+### Instalación
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/samuhlo-training/samenufit.git
+cd samenufit
+
+# 2. Instalar dependencias
+bun install
+
+# 3. Iniciar servidor de desarrollo
+bun dev
+```
+
+¡Listo! La aplicación estará disponible en `http://localhost:5173`
+
+## 📜 Comandos Disponibles
+
+```bash
+# Desarrollo
+bun dev                 # Servidor de desarrollo
+bun preview            # Vista previa de producción
+
+# Construcción
+bun run build          # Construcción para producción
+bun run type-check     # Verificación de tipos
+
+# Calidad de código
+bun lint               # Linter con corrección automática
+bun run format         # Formateo de código
+```
+
+## 📂 Estructura del Proyecto
+
+```
+src/
+├── 🏠 app/
+│   ├── layout/         # Layouts principales
+│   └── pages/          # Páginas de la aplicación
+├── 🍽️ meal-planning/
+│   ├── recipes/        # Gestión de recetas
+│   ├── shopping-lists/ # Listas de compra
+│   └── weekly-plans/   # Planificación semanal
+├── 🔧 infrastructure/
+│   ├── router/         # Configuración de rutas
+│   └── storage/        # Adaptadores de almacenamiento
+├── 🤝 shared/
+│   ├── components/     # Componentes reutilizables
+│   ├── types/          # Tipos TypeScript
+│   └── utils/          # Utilidades
+└── 🎨 assets/          # Recursos estáticos
+```
+
+## 🔧 Entorno de Desarrollo
+
+### IDE Recomendado
+
+- **Visual Studio Code**
+- **Extensión**: [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (Vue Language Features)
+- ⚠️ **Desactivar**: Extensión Vetur (conflicto con Volar)
+
+### Configuración Adicional
+
+```bash
+# Configurar Git hooks (opcional)
+bun run prepare
+
+# Verificar configuración
+bun run type-check
+```
+
+## 🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Por favor:
+
+1. 🍴 Haz fork del repositorio
+2. 🌿 Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. ✅ Confirma tus cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+4. 📤 Sube la rama (`git push origin feature/nueva-funcionalidad`)
+5. 🔄 Abre un Pull Request
+
+<div align="center">
+  <p>Hecho con ❤️ por <a href="https://github.com/samuhlo"><span>samulo</span></a></p>
+  <p>
+    <a href="#-samenufit">⬆️ Volver arriba</a>
+  </p>
+</div>
