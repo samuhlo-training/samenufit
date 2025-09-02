@@ -1,6 +1,6 @@
 <template>
   <div class="bg-[#fff3e3] rounded-xl shadow-md p-6 mb-4">
-    <h2 class="text-xl font-bold mb-4 uppercase text-[#8b4513] pb-2">
+    <h2 class="text-xl mona-sans-custom font-bold mb-4 uppercase text-[#8b4513] pb-2">
       {{ categoryName }}
     </h2>
 

@@ -38,7 +38,9 @@
       <!-- Total Section -->
       <div class="bg-[#fff3e3] rounded-xl shadow-md border border-[#8b4513]/10 p-6">
         <div class="flex justify-between items-center">
-          <span class="text-2xl font-bold text-[#8b4513] uppercase">Total Aprox:</span>
+          <span class="text-3xl mona-sans-custom font-bold text-[#8b4513] uppercase"
+            >Total Aprox:</span
+          >
           <div class="text-right">
             <div class="text-4xl font-bold text-[#C5DF67]">{{ formatTotal(totalCost) }}€</div>
             <div class="w-20 h-2 bg-[#C5DF67] ml-auto mt-2 rounded-full"></div>
