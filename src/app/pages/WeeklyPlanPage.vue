@@ -2,20 +2,10 @@
   <div class="container mx-auto flex flex-col justify-center items-center">
     <div class="flex flex-col gap-2 items-center justify-center w-full max-w-4xl mb-7">
       <h1 class="text-4xl mona-sans-custom uppercase font-bold">Plan Semanal</h1>
-      <div class="flex gap-2">
-        <button
-          @click="fillWithSamples"
-          class="bg-[var(--primary-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
-        >
-          Aleatorio
-        </button>
-        <button
-          @click="clearAll"
-          class="border border-[var(--text-main-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
-        >
-          Vaciar
-        </button>
-      </div>
+      <ActionButtons 
+        :buttons="actionButtons"
+        @button-click="handleButtonClick"
+      />
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -44,6 +34,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { DayCard } from '@/meal-planning/weekly-plans';
 import RecipeSelector from '@/shared/components/RecipeSelector.vue';
+import ActionButtons, { type ActionButton } from '@/shared/components/ActionButtons.vue';
 import { useWeeklyPlan } from '@/meal-planning/weekly-plans';
 import { useRecipes } from '@/meal-planning/recipes';
 import type { Recipe } from '@/shared/types';
@@ -130,5 +121,31 @@ const fillWithSamples = () => {
     if (lunchRecipe) setMeal(day, 'lunch', lunchRecipe);
     if (dinnerRecipe) setMeal(day, 'dinner', dinnerRecipe);
   });
+};
+
+// Configuration for action buttons
+const actionButtons: ActionButton[] = [
+  {
+    id: 'random',
+    label: 'Aleatorio',
+    variant: 'primary'
+  },
+  {
+    id: 'clear',
+    label: 'Vaciar',
+    variant: 'secondary'
+  }
+];
+
+// Handle button clicks
+const handleButtonClick = (buttonId: string) => {
+  switch (buttonId) {
+    case 'random':
+      fillWithSamples();
+      break;
+    case 'clear':
+      clearAll();
+      break;
+  }
 };
 </script>

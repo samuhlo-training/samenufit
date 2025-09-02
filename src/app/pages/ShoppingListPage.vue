@@ -5,37 +5,15 @@
       <h1 class="text-4xl mona-sans-custom uppercase font-bold text-[#44200E]">
         Lista de la Compra
       </h1>
-      <div v-if="shoppingList.length > 0" class="flex gap-2 relative">
-        <button
-          @click="exportList"
-          class="bg-[var(--primary-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
-        >
-          Exportar
-        </button>
-        <button
-          @click="copyToClipboard"
-          class="border border-[var(--text-main-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
-        >
-          Copiar
-        </button>
-
-        <!-- Mensaje de confirmación de copiado -->
-        <Transition
-          enter-active-class="transition-all duration-500 ease-out"
-          enter-from-class="opacity-0 transform scale-0 rotate-12"
-          enter-to-class="opacity-100 transform scale-100 -rotate-3"
-          leave-active-class="transition-all duration-300 ease-in"
-          leave-from-class="opacity-100 transform scale-100 -rotate-3"
-          leave-to-class="opacity-0 transform scale-0 rotate-12"
-        >
-          <div
-            v-if="showCopiedMessage"
-            class="absolute top-1/2 -translate-y-1/2 left-full ml-4 bg-[var(--secondary-color)] text-[var(--text-main-color)] px-3 py-2 rounded-full text-sm font-bold shadow-lg transform -rotate-3 whitespace-nowrap z-10"
-          >
-            ✓ ¡Copiada!
-          </div>
-        </Transition>
-      </div>
+      <ActionButtons 
+        v-if="shoppingList.length > 0"
+        :buttons="actionButtons"
+        container-class="relative"
+        :show-confirmation-message="true"
+        :confirmation-visible="showCopiedMessage"
+        confirmation-message="✓ ¡Copiada!"
+        @button-click="handleButtonClick"
+      />
     </div>
 
     <!-- Empty state -->
@@ -79,6 +57,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useShoppingList } from '@/meal-planning/shopping-lists';
 import { useWeeklyPlan } from '@/meal-planning/weekly-plans';
 import ShoppingCategorySection from '@/meal-planning/shopping-lists/components/ShoppingCategorySection.vue';
+import ActionButtons, { type ActionButton } from '@/shared/components/ActionButtons.vue';
 
 const { generateShoppingList, groupByCategory, formatForExport } = useShoppingList();
 const { getAllPlannedMeals, init } = useWeeklyPlan();
@@ -116,71 +95,14 @@ const totalCost = computed(() => {
   }, 0);
 });
 
-// Calculate category total (same logic as in component)
-const calculateCategoryTotal = (items: { name: string; totalQuantity: number; unit: string }[]) => {
-  const basePrices: Record<string, number> = {
-    // Proteínas
-    Pollo: 6.5,
-    Ternera: 12,
-    Cerdo: 8,
-    Pavo: 7,
-    Salmón: 15,
-    Atún: 4,
-    Huevos: 0.25,
-    Tofu: 3,
-    Garbanzos: 1.2,
-
-    // Lácteos
-    Leche: 1,
-    Yogur: 0.8,
-    Queso: 8,
-    Mantequilla: 4,
-
-    // Verduras y frutas
-    Tomate: 2.5,
-    Cebolla: 1.5,
-    Ajo: 4,
-    Pimiento: 3,
-    Espinacas: 2,
-    Brócoli: 2.5,
-    Zanahoria: 1.2,
-    Apio: 2,
-    Limón: 2.5,
-    Perejil: 1.5,
-
-    // Carbohidratos
-    Arroz: 1.5,
-    Pasta: 1.2,
-    Pan: 2,
-    Patata: 1,
-    Quinoa: 4,
-    Avena: 2.5,
-
-    // Grasas
-    'Aceite de oliva': 4,
-    Aguacate: 1.5,
-    Almendras: 8,
-    Nueces: 10,
-
-    // Otros
-    Sal: 0.5,
-    Pimienta: 8,
-    Comino: 6,
-    Pimentón: 4,
-    Azúcar: 1,
-    Miel: 5,
-  };
-
+// Calculate category total using actual item prices  
+const calculateCategoryTotal = (items: { estimatedPrice?: number }[]) => {
   const total = items.reduce((sum, item) => {
-    const basePrice = basePrices[item.name] || 2;
-    const quantity = item.totalQuantity;
-
-    let unitMultiplier = 1;
-    if (item.unit === 'g') unitMultiplier = 0.001;
-    else if (item.unit === 'ml') unitMultiplier = 0.001;
-    else if (item.unit === 'u') unitMultiplier = 1;
-
-    return sum + basePrice * quantity * unitMultiplier;
+    // Use the estimated price from the item (calculated from pricePerUnit * quantity)
+    if (item.estimatedPrice) {
+      return sum + item.estimatedPrice;
+    }
+    return sum; // Skip items without price data
   }, 0);
 
   return Math.round(total * 100) / 100;
@@ -247,5 +169,31 @@ const fallbackCopyToClipboard = (text: string) => {
   }
 
   document.body.removeChild(textArea);
+};
+
+// Configuration for action buttons
+const actionButtons: ActionButton[] = [
+  {
+    id: 'export',
+    label: 'Exportar',
+    variant: 'primary'
+  },
+  {
+    id: 'copy',
+    label: 'Copiar',
+    variant: 'secondary'
+  }
+];
+
+// Handle button clicks
+const handleButtonClick = (buttonId: string) => {
+  switch (buttonId) {
+    case 'export':
+      exportList();
+      break;
+    case 'copy':
+      copyToClipboard();
+      break;
+  }
 };
 </script>

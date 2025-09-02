@@ -37,73 +37,14 @@ const formatQuantity = (item: ShoppingListItem) => {
   return `${item.totalQuantity}${item.unit}`;
 };
 
-// Calculate category total based on individual item prices
+// Calculate category total based on item prices from shopping list
 const formatCategoryTotal = (items: ShoppingListItem[]) => {
-  // Base price per unit for different ingredients (approximate Spanish prices)
-  const basePrices: Record<string, number> = {
-    // Proteínas
-    Pollo: 6.5,
-    Ternera: 12,
-    Cerdo: 8,
-    Pavo: 7,
-    Salmón: 15,
-    Atún: 4,
-    Huevos: 0.25,
-    Tofu: 3,
-    Garbanzos: 1.2,
-
-    // Lácteos
-    Leche: 1,
-    Yogur: 0.8,
-    Queso: 8,
-    Mantequilla: 4,
-
-    // Verduras y frutas
-    Tomate: 2.5,
-    Cebolla: 1.5,
-    Ajo: 4,
-    Pimiento: 3,
-    Espinacas: 2,
-    Brócoli: 2.5,
-    Zanahoria: 1.2,
-    Apio: 2,
-    Limón: 2.5,
-    Perejil: 1.5,
-
-    // Carbohidratos
-    Arroz: 1.5,
-    Pasta: 1.2,
-    Pan: 2,
-    Patata: 1,
-    Quinoa: 4,
-    Avena: 2.5,
-
-    // Grasas
-    'Aceite de oliva': 4,
-    Aguacate: 1.5,
-    Almendras: 8,
-    Nueces: 10,
-
-    // Otros
-    Sal: 0.5,
-    Pimienta: 8,
-    Comino: 6,
-    Pimentón: 4,
-    Azúcar: 1,
-    Miel: 5,
-  };
-
   const total = items.reduce((sum, item) => {
-    const basePrice = basePrices[item.name] || 2; // Default price if not found
-    const quantity = item.totalQuantity;
-
-    // Adjust price based on unit (rough conversion)
-    let unitMultiplier = 1;
-    if (item.unit === 'g') unitMultiplier = 0.001;
-    else if (item.unit === 'ml') unitMultiplier = 0.001;
-    else if (item.unit === 'u') unitMultiplier = 1;
-
-    return sum + basePrice * quantity * unitMultiplier;
+    // Use the estimated price from the item (calculated from pricePerUnit * quantity)
+    if (item.estimatedPrice) {
+      return sum + item.estimatedPrice;
+    }
+    return sum; // Skip items without price data
   }, 0);
 
   return Math.round(total * 100) / 100; // Round to 2 decimal places
