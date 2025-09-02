@@ -1,6 +1,90 @@
 import type { Recipe } from '@/shared/types';
 import { getIngredientCategory } from '@/shared/utils';
 
+// Mapa de precios por unidad base de ingredientes (en euros)
+export const ingredientPrices: Record<string, number> = {
+  // Proteínas - Huevos y Derivados
+  'claras-huevo': 0.025, // 2.50€ por 100g / 100g = 0.025€ por gramo
+  'huevo-entero': 0.25, // 0.25€ por unidad
+  'huevo-duro': 0.25, // 0.25€ por unidad
+
+  // Proteínas - Carnes
+  'carne-picada-magra': 0.012, // 1.20€ por 100g / 100g = 0.012€ por gramo
+  'carne-picada-95-5': 0.012, // Mismo precio que carne picada magra
+  'ternera-magra': 0.018, // 1.80€ por 100g / 100g = 0.018€ por gramo
+  'bistec-ternera': 0.018, // 1.80€ por 100g / 100g = 0.018€ por gramo
+  'pechuga-pollo': 0.008, // 0.80€ por 100g / 100g = 0.008€ por gramo
+  'pechuga-pollo-molida': 0.009, // 0.90€ por 100g / 100g = 0.009€ por gramo
+
+  // Proteínas - Pescados y Mariscos
+  'atun-natural': 0.02, // 2.00€ por 100g / 100g = 0.02€ por gramo
+  'camarones-cocidos': 0.045, // 4.50€ por 100g / 100g = 0.045€ por gramo
+
+  // Proteínas - Embutidos
+  'jamon-serrano': 0.025, // 2.50€ por 100g / 100g = 0.025€ por gramo
+  'jamon-pavo': 0.018, // 1.80€ por 100g / 100g = 0.018€ por gramo
+
+  // Proteínas - Lácteos Proteicos
+  'proteina-polvo': 0.035, // 3.50€ por 100g / 100g = 0.035€ por gramo
+  'proteina-suero': 1.2, // 1.20€ por dosis
+  'yogur-griego-natural': 0.015, // 1.50€ por 100g / 100g = 0.015€ por gramo
+  'yogur-griego-proteinas': 1.2, // 1.20€ por unidad
+
+  // Carbohidratos - Cereales y Granos
+  'pan-integral': 0.15, // 0.15€ por unidad/rebanada
+  'pan-hamburguesa': 0.4, // 0.40€ por unidad
+  'avena-copos': 0.003, // 0.30€ por 100g / 100g = 0.003€ por gramo
+  arroz: 0.0015, // 0.15€ por 100g / 100g = 0.0015€ por gramo
+  'pasta-integral': 0.002, // 0.20€ por 100g / 100g = 0.002€ por gramo
+
+  // Carbohidratos - Tortillas y Wraps
+  'tortillas-maiz': 0.25, // 0.25€ por unidad
+  'tortilla-trigo-integral': 0.35, // 0.35€ por unidad
+  'tortitas-arroz-integral': 0.15, // 0.15€ por unidad
+
+  // Carbohidratos - Tubérculos
+  patata: 0.3, // 0.30€ por unidad grande
+
+  // Carbohidratos - Cereales Procesados
+  'copos-maiz-sin-azucar': 0.004, // 0.40€ por 100g / 100g = 0.004€ por gramo
+
+  // Vegetales y Verduras - Hojas Verdes
+  lechuga: 1.2, // 1.20€ por unidad
+  'lechuga-iceberg': 1.0, // 1.00€ por unidad
+  'hojas-verdes': 0.02, // 2.00€ por 100g / 100g = 0.02€ por gramo
+
+  // Vegetales y Verduras - Verduras Frescas
+  cebolla: 0.2, // 0.20€ por unidad
+  cebolleta: 0.15, // 0.15€ por unidad
+  tomate: 0.3, // 0.30€ por unidad
+  'tomates-cherry': 0.015, // 1.50€ por 100g / 100g = 0.015€ por gramo
+  'fideos-calabacin': 0.008, // 0.80€ por 100g / 100g = 0.008€ por gramo
+  calabaza: 0.004, // 0.40€ por 100g / 100g = 0.004€ por gramo
+
+  // Frutas - Frutas Frescas
+  banana: 0.3, // 0.30€ por unidad
+  arandanos: 0.025, // 2.50€ por 100g / 100g = 0.025€ por gramo
+  fresas: 0.02, // 2.00€ por 100g / 100g = 0.02€ por gramo
+  aguacate: 1.5, // 1.50€ por unidad
+
+  // Lácteos y Quesos - Leche
+  'leche-desnatada': 0.001, // 0.10€ por 100ml / 100ml = 0.001€ por ml
+
+  // Lácteos y Quesos - Quesos
+  'queso-bajo-grasa': 0.8, // 0.80€ por porción
+  'queso-crema-light': 0.6, // 0.60€ por porción
+  'queso-fresco-untar': 0.5, // 0.50€ por porción
+
+  // Condimentos y Salsas - Salsas
+  'salsa-tomate-natural': 0.003, // 0.30€ por 100g / 100g = 0.003€ por gramo
+  'salsa-bbq-sin-azucar': 0.25, // 0.25€ por porción
+  'aderezo-yogur': 0.4, // 0.40€ por porción
+  'mostaza-dijon': 0.1, // 0.10€ por porción
+
+  // Otros
+  'gelatina-sin-azucar': 0.6, // 0.60€ por sobre
+};
+
 export const recipeDatabase: Recipe[] = [
   // --- Desayunos ---
   {
@@ -25,6 +109,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 7,
         unit: 'u',
         category: getIngredientCategory('claras'),
+        pricePerUnit: ingredientPrices['claras-huevo'],
       },
       {
         id: 'huevo-entero',
@@ -32,6 +117,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('huevo'),
+        pricePerUnit: ingredientPrices['huevo-entero'],
       },
       {
         id: 'pan-integral',
@@ -39,6 +125,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 4,
         unit: 'u',
         category: getIngredientCategory('pan'),
+        pricePerUnit: ingredientPrices['pan-integral'],
       },
       {
         id: 'queso-bajo-grasa',
@@ -46,6 +133,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-bajo-grasa'],
       },
       {
         id: 'cebolleta',
@@ -53,6 +141,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('cebolleta'),
+        pricePerUnit: ingredientPrices['cebolleta'],
       },
     ],
     macros: { calories: 547, protein: 49, carbs: 54, fat: 15 },
@@ -76,6 +165,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 4,
         unit: 'u',
         category: getIngredientCategory('huevo'),
+        pricePerUnit: ingredientPrices['huevo-duro'],
       },
       {
         id: 'atun-natural',
@@ -83,6 +173,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 50,
         unit: 'g',
         category: getIngredientCategory('atún'),
+        pricePerUnit: ingredientPrices['atun-natural'],
       },
       {
         id: 'yogur-griego-natural',
@@ -90,6 +181,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 50,
         unit: 'g',
         category: getIngredientCategory('yogur'),
+        pricePerUnit: ingredientPrices['yogur-griego-natural'],
       },
       {
         id: 'pan-integral',
@@ -97,6 +189,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 4,
         unit: 'u',
         category: getIngredientCategory('pan'),
+        pricePerUnit: ingredientPrices['pan-integral'],
       },
     ],
     macros: { calories: 650, protein: 45, carbs: 68, fat: 20 },
@@ -118,6 +211,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 250,
         unit: 'g',
         category: getIngredientCategory('claras'),
+        pricePerUnit: ingredientPrices['claras-huevo'],
       },
       {
         id: 'proteina-polvo',
@@ -125,6 +219,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 35,
         unit: 'g',
         category: getIngredientCategory('proteína'),
+        pricePerUnit: ingredientPrices['proteina-polvo'],
       },
       {
         id: 'avena-copos',
@@ -132,6 +227,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 60,
         unit: 'g',
         category: getIngredientCategory('avena'),
+        pricePerUnit: ingredientPrices['avena-copos'],
       },
       {
         id: 'banana',
@@ -139,6 +235,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 0.5,
         unit: 'u',
         category: getIngredientCategory('banana'),
+        pricePerUnit: ingredientPrices['banana'],
       },
     ],
     macros: { calories: 603, protein: 58, carbs: 76, fat: 7 },
@@ -159,6 +256,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 100,
         unit: 'g',
         category: getIngredientCategory('arándanos'),
+        pricePerUnit: ingredientPrices['arandanos'],
       },
       {
         id: 'leche-desnatada',
@@ -166,6 +264,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 200,
         unit: 'ml',
         category: getIngredientCategory('leche'),
+        pricePerUnit: ingredientPrices['leche-desnatada'],
       },
       {
         id: 'proteina-polvo',
@@ -173,6 +272,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 50,
         unit: 'g',
         category: getIngredientCategory('proteína'),
+        pricePerUnit: ingredientPrices['proteina-polvo'],
       },
     ],
     macros: { calories: 316, protein: 50, carbs: 20, fat: 4 },
@@ -195,6 +295,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 60,
         unit: 'g',
         category: getIngredientCategory('avena'),
+        pricePerUnit: ingredientPrices['avena-copos'],
       },
       {
         id: 'proteina-suero',
@@ -202,6 +303,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1.5,
         unit: 'u',
         category: getIngredientCategory('proteína'),
+        pricePerUnit: ingredientPrices['proteina-suero'],
       },
     ],
     macros: { calories: 470, protein: 51, carbs: 44, fat: 8.5 },
@@ -227,6 +329,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1000,
         unit: 'g',
         category: getIngredientCategory('calabacín'),
+        pricePerUnit: ingredientPrices['fideos-calabacin'],
       },
       {
         id: 'carne-picada-magra',
@@ -234,6 +337,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 150,
         unit: 'g',
         category: getIngredientCategory('carne'),
+        pricePerUnit: ingredientPrices['carne-picada-magra'],
       },
       {
         id: 'salsa-tomate-natural',
@@ -241,6 +345,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('salsa'),
+        pricePerUnit: ingredientPrices['salsa-tomate-natural'],
       },
     ],
     macros: { calories: 511, protein: 57, carbs: 37, fat: 15 },
@@ -263,6 +368,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 250,
         unit: 'g',
         category: getIngredientCategory('ternera'),
+        pricePerUnit: ingredientPrices['ternera-magra'],
       },
       {
         id: 'patata',
@@ -270,6 +376,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('patata'),
+        pricePerUnit: ingredientPrices['patata'],
       },
       {
         id: 'salsa-bbq-sin-azucar',
@@ -277,6 +384,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('salsa'),
+        pricePerUnit: ingredientPrices['salsa-bbq-sin-azucar'],
       },
     ],
     macros: { calories: 655, protein: 63, carbs: 58, fat: 11 },
@@ -299,6 +407,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 100,
         unit: 'g',
         category: getIngredientCategory('camarones'),
+        pricePerUnit: ingredientPrices['camarones-cocidos'],
       },
       {
         id: 'pasta-integral',
@@ -306,6 +415,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 65,
         unit: 'g',
         category: getIngredientCategory('pasta'),
+        pricePerUnit: ingredientPrices['pasta-integral'],
       },
       {
         id: 'hojas-verdes',
@@ -313,6 +423,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('verdes'),
+        pricePerUnit: ingredientPrices['hojas-verdes'],
       },
       {
         id: 'tomates-cherry',
@@ -320,6 +431,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('tomate'),
+        pricePerUnit: ingredientPrices['tomates-cherry'],
       },
       {
         id: 'aderezo-yogur',
@@ -327,6 +439,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('yogur'),
+        pricePerUnit: ingredientPrices['aderezo-yogur'],
       },
     ],
     macros: { calories: 500, protein: 30, carbs: 70, fat: 10 },
@@ -349,6 +462,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 150,
         unit: 'g',
         category: getIngredientCategory('carne'),
+        pricePerUnit: ingredientPrices['carne-picada-magra'],
       },
       {
         id: 'tortillas-maiz',
@@ -356,6 +470,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 3,
         unit: 'u',
         category: getIngredientCategory('tortilla'),
+        pricePerUnit: ingredientPrices['tortillas-maiz'],
       },
       {
         id: 'lechuga',
@@ -363,6 +478,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('lechuga'),
+        pricePerUnit: ingredientPrices['lechuga'],
       },
       {
         id: 'tomate',
@@ -370,6 +486,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('tomate'),
+        pricePerUnit: ingredientPrices['tomate'],
       },
     ],
     macros: { calories: 522, protein: 54, carbs: 25, fat: 20 },
@@ -390,6 +507,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 150,
         unit: 'g',
         category: getIngredientCategory('carne'),
+        pricePerUnit: ingredientPrices['carne-picada-95-5'],
       },
       {
         id: 'queso-bajo-grasa',
@@ -397,6 +515,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-bajo-grasa'],
       },
       {
         id: 'lechuga-iceberg',
@@ -404,6 +523,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 2,
         unit: 'u',
         category: getIngredientCategory('lechuga'),
+        pricePerUnit: ingredientPrices['lechuga-iceberg'],
       },
     ],
     macros: { calories: 354, protein: 49, carbs: 5, fat: 14.5 },
@@ -427,6 +547,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('arroz'),
+        pricePerUnit: ingredientPrices['arroz'],
       },
       {
         id: 'carne-picada-magra',
@@ -434,6 +555,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 150,
         unit: 'g',
         category: getIngredientCategory('carne'),
+        pricePerUnit: ingredientPrices['carne-picada-magra'],
       },
       {
         id: 'cebolla',
@@ -441,6 +563,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('cebolla'),
+        pricePerUnit: ingredientPrices['cebolla'],
       },
     ],
     macros: { calories: 594, protein: 51, carbs: 70, fat: 12 },
@@ -462,6 +585,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 150,
         unit: 'g',
         category: getIngredientCategory('carne'),
+        pricePerUnit: ingredientPrices['carne-picada-magra'],
       },
       {
         id: 'pan-hamburguesa',
@@ -469,6 +593,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('pan'),
+        pricePerUnit: ingredientPrices['pan-hamburguesa'],
       },
       {
         id: 'queso-bajo-grasa',
@@ -476,6 +601,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-bajo-grasa'],
       },
     ],
     macros: { calories: 483, protein: 46, carbs: 34, fat: 17 },
@@ -498,6 +624,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 200,
         unit: 'g',
         category: getIngredientCategory('pollo'),
+        pricePerUnit: ingredientPrices['pechuga-pollo'],
       },
       {
         id: 'tortilla-trigo-integral',
@@ -505,6 +632,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 2,
         unit: 'u',
         category: getIngredientCategory('tortilla'),
+        pricePerUnit: ingredientPrices['tortilla-trigo-integral'],
       },
       {
         id: 'queso-crema-light',
@@ -512,6 +640,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-crema-light'],
       },
     ],
     macros: { calories: 587, protein: 54, carbs: 55, fat: 16 },
@@ -534,6 +663,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 130,
         unit: 'g',
         category: getIngredientCategory('carne'),
+        pricePerUnit: ingredientPrices['carne-picada-magra'],
       },
       {
         id: 'lechuga-iceberg',
@@ -541,6 +671,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('lechuga'),
+        pricePerUnit: ingredientPrices['lechuga-iceberg'],
       },
       {
         id: 'queso-bajo-grasa',
@@ -548,6 +679,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-bajo-grasa'],
       },
     ],
     macros: { calories: 350, protein: 45, carbs: 18, fat: 17 },
@@ -569,6 +701,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 220,
         unit: 'g',
         category: getIngredientCategory('ternera'),
+        pricePerUnit: ingredientPrices['bistec-ternera'],
       },
       {
         id: 'calabaza',
@@ -576,6 +709,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 600,
         unit: 'g',
         category: getIngredientCategory('calabaza'),
+        pricePerUnit: ingredientPrices['calabaza'],
       },
     ],
     macros: { calories: 576, protein: 51, carbs: 80, fat: 5 },
@@ -598,6 +732,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('gelatina'),
+        pricePerUnit: ingredientPrices['gelatina-sin-azucar'],
       },
       {
         id: 'yogur-griego-proteinas',
@@ -605,6 +740,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('yogur'),
+        pricePerUnit: ingredientPrices['yogur-griego-proteinas'],
       },
       {
         id: 'fresas',
@@ -612,6 +748,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 50,
         unit: 'g',
         category: getIngredientCategory('fresas'),
+        pricePerUnit: ingredientPrices['fresas'],
       },
     ],
     macros: { calories: 177, protein: 23, carbs: 7, fat: 0.3 },
@@ -633,6 +770,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 3,
         unit: 'u',
         category: getIngredientCategory('claras'),
+        pricePerUnit: ingredientPrices['claras-huevo'],
       },
       {
         id: 'huevo-entero',
@@ -640,6 +778,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('huevo'),
+        pricePerUnit: ingredientPrices['huevo-entero'],
       },
       {
         id: 'tortitas-arroz-integral',
@@ -647,6 +786,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 4,
         unit: 'u',
         category: getIngredientCategory('arroz'),
+        pricePerUnit: ingredientPrices['tortitas-arroz-integral'],
       },
       {
         id: 'queso-fresco-untar',
@@ -654,6 +794,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-fresco-untar'],
       },
     ],
     macros: { calories: 320, protein: 27, carbs: 30, fat: 10 },
@@ -675,6 +816,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 3,
         unit: 'u',
         category: getIngredientCategory('claras'),
+        pricePerUnit: ingredientPrices['claras-huevo'],
       },
       {
         id: 'huevo-entero',
@@ -682,6 +824,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('huevo'),
+        pricePerUnit: ingredientPrices['huevo-entero'],
       },
       {
         id: 'pan-integral',
@@ -689,6 +832,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 2,
         unit: 'u',
         category: getIngredientCategory('pan'),
+        pricePerUnit: ingredientPrices['pan-integral'],
       },
       {
         id: 'aguacate',
@@ -696,6 +840,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 0.25,
         unit: 'u',
         category: getIngredientCategory('aguacate'),
+        pricePerUnit: ingredientPrices['aguacate'],
       },
       {
         id: 'jamon-serrano',
@@ -703,6 +848,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('jamón'),
+        pricePerUnit: ingredientPrices['jamon-serrano'],
       },
     ],
     macros: { calories: 399, protein: 27, carbs: 38, fat: 13 },
@@ -724,6 +870,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 200,
         unit: 'ml',
         category: getIngredientCategory('leche'),
+        pricePerUnit: ingredientPrices['leche-desnatada'],
       },
       {
         id: 'proteina-polvo',
@@ -731,6 +878,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('proteína'),
+        pricePerUnit: ingredientPrices['proteina-polvo'],
       },
     ],
     macros: { calories: 195, protein: 30, carbs: 12, fat: 3 },
@@ -752,6 +900,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 5,
         unit: 'u',
         category: getIngredientCategory('claras'),
+        pricePerUnit: ingredientPrices['claras-huevo'],
       },
       {
         id: 'huevo-entero',
@@ -759,6 +908,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('huevo'),
+        pricePerUnit: ingredientPrices['huevo-entero'],
       },
       {
         id: 'jamon-pavo',
@@ -766,6 +916,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('pavo'),
+        pricePerUnit: ingredientPrices['jamon-pavo'],
       },
       {
         id: 'queso-bajo-grasa',
@@ -773,6 +924,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('queso'),
+        pricePerUnit: ingredientPrices['queso-bajo-grasa'],
       },
     ],
     macros: { calories: 298, protein: 40, carbs: 10, fat: 9 },
@@ -795,6 +947,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 200,
         unit: 'g',
         category: getIngredientCategory('pollo'),
+        pricePerUnit: ingredientPrices['pechuga-pollo-molida'],
       },
       {
         id: 'copos-maiz-sin-azucar',
@@ -802,6 +955,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('maíz'),
+        pricePerUnit: ingredientPrices['copos-maiz-sin-azucar'],
       },
       {
         id: 'mostaza-dijon',
@@ -809,6 +963,7 @@ export const recipeDatabase: Recipe[] = [
         quantity: 1,
         unit: 'u',
         category: getIngredientCategory('mostaza'),
+        pricePerUnit: ingredientPrices['mostaza-dijon'],
       },
     ],
     macros: { calories: 290, protein: 49, carbs: 18, fat: 3 },
