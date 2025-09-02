@@ -346,8 +346,8 @@ export const recipeDatabase: Recipe[] = [
       {
         id: 'carne-picada-magra',
         name: 'Carne picada magra',
-        quantity: 1,
-        unit: 'unidad(es)',
+        quantity: 150,
+        unit: 'g',
         category: getIngredientCategory('carne'),
       },
       {
@@ -386,9 +386,9 @@ export const recipeDatabase: Recipe[] = [
     ingredients: [
       {
         id: 'carne-picada-95-5',
-        name: 'Carne picada magra (95/5)',
-        quantity: 1,
-        unit: 'unidad(es)',
+        name: 'Carne picada magra',
+        quantity: 150,
+        unit: 'g',
         category: getIngredientCategory('carne'),
       },
       {
@@ -431,8 +431,8 @@ export const recipeDatabase: Recipe[] = [
       {
         id: 'carne-picada-magra',
         name: 'Carne picada magra',
-        quantity: 1,
-        unit: 'unidad(es)',
+        quantity: 150,
+        unit: 'g',
         category: getIngredientCategory('carne'),
       },
       {
@@ -459,8 +459,8 @@ export const recipeDatabase: Recipe[] = [
       {
         id: 'carne-picada-magra',
         name: 'Carne picada magra',
-        quantity: 1,
-        unit: 'unidad(es)',
+        quantity: 150,
+        unit: 'g',
         category: getIngredientCategory('carne'),
       },
       {
@@ -606,7 +606,13 @@ export const recipeDatabase: Recipe[] = [
         unit: 'unidad(es)',
         category: getIngredientCategory('yogur'),
       },
-      { id: 'fresas', name: 'Fresas', quantity: 50, unit: 'g', category: getIngredientCategory('fresas') },
+      {
+        id: 'fresas',
+        name: 'Fresas',
+        quantity: 50,
+        unit: 'g',
+        category: getIngredientCategory('fresas'),
+      },
     ],
     macros: { calories: 177, protein: 23, carbs: 7, fat: 0.3 },
   },
