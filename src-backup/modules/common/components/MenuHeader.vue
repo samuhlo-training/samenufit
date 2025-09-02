@@ -130,7 +130,7 @@ const closeMobileMenu = () => {
 <style scoped>
 /* Estilos personalizados fuera de Tailwind*/
 .hamburger-line {
-  background-color: var(--text-main-color);
+  background-color: var(--main-color);
 }
 
 .nav-link::after {
@@ -170,6 +170,6 @@ const closeMobileMenu = () => {
 }
 
 .mobile-nav-link.router-link-active {
-  color: var(--text-main-color);
+  color: var(--main-color);
 }
 </style>

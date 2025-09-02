@@ -23,7 +23,7 @@
           />
         </svg>
       </div>
-      <div class="text-[var(--text-main-color)] font-semibold mona-sans-custom uppercase">
+      <div class="text-[var(--main-color)] font-semibold mona-sans-custom uppercase">
         Seleccionar {{ mealTypeText }}
       </div>
       <div class="text-text-main-color/60 text-sm mt-1">Haz clic para elegir una receta</div>
@@ -104,7 +104,7 @@
         <div v-if="showReplaceButton" class="flex justify-end mt-4">
           <button
             @click="handleReplaceClick"
-            class="bg-[var(--text-main-color)] p-2 rounded-full hover:bg-[var(--accent-color)]/80 transition-colors shadow-sm"
+            class="bg-[var(--main-color)] p-2 rounded-full hover:bg-[var(--accent-color)]/80 transition-colors shadow-sm"
           >
             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

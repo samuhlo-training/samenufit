@@ -23,7 +23,7 @@
           />
         </svg>
       </div>
-      <div class="text-[var(--text-main-color)] font-semibold mona-sans-custom uppercase">
+      <div class="text-[var(--main-color)] font-semibold mona-sans-custom uppercase">
         Seleccionar {{ mealTypeText }}
       </div>
       <div class="text-text-main-color opacity-70 text-sm mt-1">
@@ -115,7 +115,7 @@
             <div v-if="showReplaceButton" class="flex justify-end mt-4">
               <button
                 @click="handleReplaceClick"
-                class="bg-[var(--text-main-color)] p-2 rounded-full hover:bg-[var(--accent-color)]/80 transition-colors shadow-sm group cursor-pointer"
+                class="bg-[var(--main-color)] p-2 rounded-full hover:bg-[var(--accent-color)]/80 transition-colors shadow-sm group cursor-pointer"
               >
                 <svg
                   class="w-7 h-7 text-white transition-transform duration-900 ease-in-out group-hover:-rotate-360 group-hover:duration-1000"

@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col gap-2 mt-5">
-    <div
-      class="bg-[#f2ca50] text-[#44200e] p-4 min-w-18 rounded-xl text-sm font-semibold shadow-sm"
-    >
+    <div class="bg-primary text-main p-4 min-w-18 rounded-xl text-sm font-semibold shadow-sm">
       ~{{ value }}{{ unit }}
       <p class="text-white font-regular text-center">{{ props.type }}</p>
     </div>

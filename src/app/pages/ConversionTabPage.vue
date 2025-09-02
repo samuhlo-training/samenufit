@@ -9,7 +9,7 @@
 
     <!-- Equivalencies Table -->
     <div class="bg-[#fff3e3] rounded-lg shadow-sm p-7 w-full max-w-3xl">
-      <table class="w-full text-[#44200e]">
+      <table class="w-full text-main]">
         <thead>
           <tr>
             <th class="mona-sans-custom font-bold pb-3 text-left text-lg uppercase">

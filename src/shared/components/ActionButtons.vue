@@ -22,7 +22,7 @@
     >
       <div
         v-if="confirmationVisible"
-        class="absolute top-1/2 -translate-y-1/2 left-full ml-4 bg-[var(--secondary-color)] text-[var(--text-main-color)] px-3 py-2 rounded-full text-sm font-bold shadow-lg transform -rotate-3 whitespace-nowrap z-10"
+        class="absolute top-1/2 -translate-y-1/2 left-full ml-4 bg-[var(--secondary-color)] text-[var(--main-color)] px-3 py-2 rounded-full text-sm font-bold shadow-lg transform -rotate-3 whitespace-nowrap z-10"
       >
         {{ confirmationMessage }}
       </div>
@@ -66,12 +66,13 @@ const handleClick = (buttonId: string) => {
 };
 
 const getButtonClass = (variant: 'primary' | 'secondary') => {
-  const baseClass = 'font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100';
-  
+  const baseClass =
+    'font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100';
+
   if (variant === 'primary') {
     return `${baseClass} bg-[var(--primary-color)] text-text-main-color`;
   } else {
-    return `${baseClass} border border-[var(--text-main-color)] text-text-main-color`;
+    return `${baseClass} border border-[var(--main-color)] text-text-main-color`;
   }
 };
 </script>
