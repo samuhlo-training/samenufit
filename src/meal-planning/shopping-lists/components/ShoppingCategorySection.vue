@@ -14,7 +14,9 @@
     <!-- Category total price -->
     <div class="mt-3 pt-3">
       <div class="flex justify-end">
-        <span class="text-xl font-bold text-[var(--accent-color)] px-3 rounded-lg">
+        <span
+          class="gochi-hand-regular text-4xl font-bold text-[var(--accent-color)] px-3 rounded-lg"
+        >
           {{ formatCategoryTotal(items) }}€
         </span>
       </div>

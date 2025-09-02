@@ -5,7 +5,7 @@
       <h1 class="text-4xl mona-sans-custom uppercase font-bold text-[#44200E]">
         Lista de la Compra
       </h1>
-      <ActionButtons 
+      <ActionButtons
         v-if="shoppingList.length > 0"
         :buttons="actionButtons"
         container-class="relative"
@@ -37,14 +37,17 @@
       </div>
 
       <!-- Total Section -->
-      <div class="bg-[#fff3e3] rounded-xl shadow-md border border-[#44200E]/10 p-6">
-        <div class="flex justify-between items-center">
+      <div class="p-6">
+        <div class="flex justify-end gap-8 items-center">
           <span class="text-3xl mona-sans-custom font-bold text-[#44200E] uppercase"
             >Total Aprox:</span
           >
           <div class="text-right">
-            <div class="text-4xl font-bold text-[#C5DF67]">{{ formatTotal(totalCost) }}€</div>
-            <div class="w-20 h-2 bg-[#C5DF67] ml-auto mt-2 rounded-full"></div>
+            <div
+              class="gochi-hand-regular text-6xl underline decoration-wavy underline-offset-4 font-bold text-[#C5DF67]"
+            >
+              {{ formatTotal(totalCost) }}€
+            </div>
           </div>
         </div>
       </div>
@@ -95,7 +98,7 @@ const totalCost = computed(() => {
   }, 0);
 });
 
-// Calculate category total using actual item prices  
+// Calculate category total using actual item prices
 const calculateCategoryTotal = (items: { estimatedPrice?: number }[]) => {
   const total = items.reduce((sum, item) => {
     // Use the estimated price from the item (calculated from pricePerUnit * quantity)
@@ -176,13 +179,13 @@ const actionButtons: ActionButton[] = [
   {
     id: 'export',
     label: 'Exportar',
-    variant: 'primary'
+    variant: 'primary',
   },
   {
     id: 'copy',
     label: 'Copiar',
-    variant: 'secondary'
-  }
+    variant: 'secondary',
+  },
 ];
 
 // Handle button clicks

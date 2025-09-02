@@ -2,7 +2,7 @@
   <div class="container mx-auto flex flex-col justify-center items-center">
     <h1 class="text-4xl mona-sans-custom ml-7 uppercase font-bold mb-[-0.5rem]">EQUIVALENCIAS A</h1>
     <h2
-      class="text-2xl mona-sans-custom text-[var(--accent-color)] ml-60 font-bold mb-7 rotate-[-8deg]"
+      class="gochi-hand-regular text-5xl mona-sans-custom text-[var(--accent-color)] ml-60 font-bold mb-7 rotate-[-8deg]"
     >
       200g de Pollo!
     </h2>

@@ -25,6 +25,12 @@ body {
   font-variation-settings: 'wdth' 87.3;
 }
 
+.gochi-hand-regular {
+  font-family: 'Gochi Hand', cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 /* Clases utilitarias personalizadas para los colores */
 .bg-main {
   background-color: var(--background-main-color);
