@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Technology Stack
 
-This is a Vue 3 application built with:
+This is a Vue 3 meal planning and nutrition application built with:
 - **Vue 3** with Composition API (`<script setup>` style)
 - **TypeScript** for type safety
 - **Vite** as build tool and dev server
@@ -37,30 +37,77 @@ bun run format     # Format code with Prettier
 
 ## Project Architecture
 
-### Modular Structure
-The application follows a modular architecture with feature-based organization:
+### Screaming Architecture with Scope Rule Pattern
+The application follows Screaming Architecture principles where the business domain screams from the folder structure. Each domain concept has its own bounded context with clear scope rules:
 
 ```
 src/
-├── modules/           # Feature modules
-│   ├── common/       # Shared components and utilities
-│   ├── landing/      # Landing page module
-│   ├── weeklyplan/   # Weekly meal planning
-│   ├── recipebook/   # Recipe management
-│   ├── shoppinglist/ # Shopping list functionality
-│   └── conversiontab/ # Unit conversion tools
-├── router/           # Vue Router configuration
-├── stores/           # Pinia stores
-├── assets/           # Static assets and global styles
-└── data/             # Static data files
+├── meal-planning/           # MEAL PLANNING DOMAIN
+│   ├── weekly-plans/       # Weekly meal planning bounded context
+│   │   ├── components/     # UI components specific to weekly planning
+│   │   ├── composables/    # Business logic composables
+│   │   ├── stores/         # Domain state management
+│   │   ├── types.ts        # Domain types and interfaces
+│   │   └── index.ts        # Public API (scope boundary)
+│   ├── recipes/            # Recipe management bounded context
+│   │   ├── components/     # Recipe-specific UI components
+│   │   ├── composables/    # Recipe business logic
+│   │   ├── stores/         # Recipe state management
+│   │   ├── types.ts        # Recipe domain types
+│   │   └── index.ts        # Public API
+│   └── shopping-lists/     # Shopping list bounded context
+│       ├── components/     # Shopping list UI
+│       ├── composables/    # Shopping logic
+│       ├── stores/         # Shopping state
+│       ├── types.ts        # Shopping domain types
+│       └── index.ts        # Public API
+├── nutrition/              # NUTRITION DOMAIN
+│   ├── macros/            # Macro calculation bounded context
+│   │   ├── components/     # Macro display components
+│   │   ├── composables/    # Macro calculation logic
+│   │   ├── types.ts        # Nutrition types
+│   │   └── index.ts        # Public API
+│   └── conversions/       # Unit conversion bounded context
+│       ├── components/     # Conversion UI
+│       ├── composables/    # Conversion logic
+│       ├── types.ts        # Conversion types
+│       └── index.ts        # Public API
+├── shared/                 # SHARED KERNEL
+│   ├── components/        # Generic UI components
+│   ├── composables/       # Cross-domain utilities
+│   ├── types/             # Shared types and interfaces
+│   └── utils/             # Pure utility functions
+├── infrastructure/         # INFRASTRUCTURE LAYER
+│   ├── router/            # Vue Router configuration
+│   ├── storage/           # Data persistence adapters
+│   ├── api/               # External API adapters
+│   └── config/            # Application configuration
+└── app/                   # APPLICATION LAYER
+    ├── layout/            # Application shell components
+    ├── pages/             # Route-level page components
+    └── main.ts            # Application bootstrap
 ```
 
 ### Key Architectural Decisions
-- **Feature modules**: Each major feature is organized as a self-contained module
+
+#### Domain-Driven Design Principles
+- **Screaming Architecture**: Business domains are immediately visible from the folder structure
+- **Bounded Contexts**: Each domain area (`meal-planning/`, `nutrition/`) contains related business concepts
+- **Scope Rule Pattern**: Each bounded context exposes a public API through `index.ts` files
+- **Domain Isolation**: Cross-domain dependencies only through public APIs, never direct imports
+
+#### Technical Architecture
 - **Composition API**: All components use `<script setup>` syntax
 - **TypeScript interfaces**: Prefer interfaces over types for better extendability
 - **Functional programming**: Avoid classes, prefer functional and declarative patterns
-- **Composables**: Use `use<Name>` pattern for reusable logic
+- **Composables**: Use `use<Name>` pattern for domain-specific business logic
+- **State management**: Pinia stores within each bounded context, with persistence adapters in infrastructure layer
+
+#### Layered Architecture
+- **Domain Layer**: Pure business logic in composables and stores within each bounded context
+- **Application Layer**: Route-level pages and application shell in `/app`
+- **Infrastructure Layer**: External concerns (routing, storage, APIs) in `/infrastructure`
+- **Shared Kernel**: Common utilities and components in `/shared`
 
 ## Code Style Guidelines
 
@@ -86,6 +133,8 @@ Based on `.clinerules/vue-rules.md`:
 - Clean, maintainable TypeScript code
 - Follow DRY principles through iteration and modularization
 - Functional and declarative programming patterns over classes
+- Respect domain boundaries: never import directly from other bounded contexts
+- Use public APIs (index.ts) for cross-domain communication
 
 ## Configuration Files
 
@@ -94,6 +143,53 @@ Based on `.clinerules/vue-rules.md`:
 - **TypeScript**: Split configuration (`tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json`)
 - **Prettier**: `.prettierrc.json` - 2 spaces, single quotes, 100 char width
 - **Node version**: Requires Node.js ^20.19.0 || >=22.12.0
+
+## Application Domain
+
+This is a meal planning and nutrition tracking application with the following core features:
+- **Weekly Plan**: Plan meals for each day of the week (lunch and dinner)
+- **Recipe Book**: Manage and browse available recipes with nutritional information
+- **Shopping List**: Generate shopping lists based on planned meals
+- **Conversion Tab**: Unit conversion tools for cooking measurements
+
+The application uses a recipe-based data model where each recipe includes nutritional macros (protein, carbs, fats) and ingredient lists.
+
+## Domain Architecture Rules
+
+### Scope Rule Pattern Implementation
+Each bounded context must follow these rules:
+
+1. **Public API**: Expose only necessary functionality through `index.ts` files
+2. **Domain Isolation**: Never import directly from other domains - only through public APIs
+3. **Internal Organization**: Keep domain-specific logic within the bounded context
+4. **Dependency Direction**: Dependencies flow from outer layers (infrastructure, app) toward inner layers (domain)
+
+### Import Rules
+```typescript
+// ✅ CORRECT: Import from public API
+import { useWeeklyPlan } from '@/meal-planning/weekly-plans'
+import { useRecipeSearch } from '@/meal-planning/recipes'
+
+// ❌ WRONG: Direct import bypassing public API
+import { WeeklyPlanStore } from '@/meal-planning/weekly-plans/stores/weekly-plan-store'
+
+// ✅ CORRECT: Shared utilities
+import { formatDate } from '@/shared/utils'
+
+// ✅ CORRECT: Infrastructure from domain
+import { storageAdapter } from '@/infrastructure/storage'
+```
+
+### Bounded Context Responsibilities
+
+#### Meal Planning Domain
+- **weekly-plans**: Weekly meal scheduling, meal slot management
+- **recipes**: Recipe management, search, filtering, nutritional calculations  
+- **shopping-lists**: Shopping list generation from planned meals
+
+#### Nutrition Domain
+- **macros**: Macro calculation, nutritional analysis, dietary tracking
+- **conversions**: Unit conversions for ingredients and measurements
 
 ## Path Aliases
 

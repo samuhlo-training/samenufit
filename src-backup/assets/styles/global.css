@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+:root {
+  /* Colores principales de la aplicación */
+  --background-main-color: #fff3e3;
+  --text-main-color: #44200e;
+  --primary-color: #f2ca50;
+  --secondary-color: #c5df67;
+  --accent-color: #ed8db9;
+}
+
+body {
+  @apply antialiased;
+  background-color: var(--background-main-color);
+  color: var(--text-main-color);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Tipografias */
+.mona-sans-custom {
+  font-family: 'Mona Sans', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings: 'wdth' 87.3;
+}
+
+/* Clases utilitarias personalizadas para los colores */
+.bg-main {
+  background-color: var(--background-main-color);
+}
+
+.text-main {
+  color: var(--text-main-color);
+}
+
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.text-secondary {
+  color: var(--secondary-color);
+}
+
+.bg-accent {
+  background-color: var(--accent-color);
+}
+
+.text-accent {
+  color: var(--accent-color);
+}
