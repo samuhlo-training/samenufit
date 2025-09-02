@@ -5,7 +5,7 @@
       <h1 class="text-4xl mona-sans-custom uppercase font-bold text-[#44200E]">
         Lista de la Compra
       </h1>
-      <div v-if="shoppingList.length > 0" class="flex gap-2">
+      <div v-if="shoppingList.length > 0" class="flex gap-2 relative">
         <button
           @click="exportList"
           class="bg-[var(--primary-color)] text-text-main-color font-bold text-sm uppercase py-3 px-6 items-center rounded-full cursor-pointer hover:scale-105 duration-300"
@@ -18,24 +18,24 @@
         >
           Copiar
         </button>
-      </div>
 
-      <!-- Mensaje de confirmación de copiado -->
-      <Transition
-        enter-active-class="transition-all duration-300 ease-out"
-        enter-from-class="opacity-0 transform -translate-y-2"
-        enter-to-class="opacity-100 transform translate-y-0"
-        leave-active-class="transition-all duration-300 ease-in"
-        leave-from-class="opacity-100 transform translate-y-0"
-        leave-to-class="opacity-0 transform -translate-y-2"
-      >
-        <div
-          v-if="showCopiedMessage"
-          class="bg-[var(--secondary-color)] text-[var(--text-main-color)] px-4 py-2 rounded-full text-sm font-semibold shadow-lg mt-2"
+        <!-- Mensaje de confirmación de copiado -->
+        <Transition
+          enter-active-class="transition-all duration-500 ease-out"
+          enter-from-class="opacity-0 transform scale-0 rotate-12"
+          enter-to-class="opacity-100 transform scale-100 -rotate-3"
+          leave-active-class="transition-all duration-300 ease-in"
+          leave-from-class="opacity-100 transform scale-100 -rotate-3"
+          leave-to-class="opacity-0 transform scale-0 rotate-12"
         >
-          ✓ Lista copiada al portapapeles
-        </div>
-      </Transition>
+          <div
+            v-if="showCopiedMessage"
+            class="absolute top-1/2 -translate-y-1/2 left-full ml-4 bg-[var(--secondary-color)] text-[var(--text-main-color)] px-3 py-2 rounded-full text-sm font-bold shadow-lg transform -rotate-3 whitespace-nowrap z-10"
+          >
+            ✓ ¡Copiada!
+          </div>
+        </Transition>
+      </div>
     </div>
 
     <!-- Empty state -->
