@@ -16,6 +16,7 @@ coverage
 .claude
 .clinerules
 .github
+.agents/
 
 /cypress/videos/
 /cypress/screenshots/

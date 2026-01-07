@@ -1,163 +1,141 @@
-# 🍽️ SaMenufit
-
-_Tu asistente inteligente para planificación de comidas y nutrición_
-
 <div align="center">
+  <br />
+  <br />
+  
+  # <code>SAMENUFIT</code>
+  
+  **MEAL PLANNING & NUTRITION ASSISTANT**
+  
+  <br />
 
-[![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?style=flat-square&logo=vue.js&logoColor=white)](https://vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+  <img src="https://img.shields.io/badge/VUE_3-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" alt="Vue" />
+  <img src="https://img.shields.io/badge/TYPESCRIPT-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/PINIA-FFD859?style=for-the-badge&logo=vue.js&logoColor=black" alt="Pinia" />
+  <img src="https://img.shields.io/badge/TAILWIND-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" />
+  
 
-<img src="portada-readme.webp"></img>
-
+  <br />
+  <br />
 </div>
 
 ---
 
-## 📖 Descripción
+### 00. PREVIEW
 
-**SaMenufit** es una aplicación web que simplifica la gestión de mi menu diario, siguiendo recetas de [Doctor Mike Diamonds](https://www.youtube.com/@DoctorMikeDiamonds). Me ayuda a hacer la lista de la compra y no pasarme de calorias. Creado como proyecto para poner en practica lo aprendido de Vue.
+![Hero Preview](portada-readme.webp)
 
-## ✨ Características Principales
+> **ABSTRACT:** Aplicación web para gestión de menú diario, planificación semanal y listas de compra automáticas. Implementa arquitectura DDD con bounded contexts para recetas, planes semanales y shopping lists. Almacenamiento local con LocalStorage adapter.
+>
+> <br />
+>
+> **ORIGIN:** Proyecto personal para implementar recetas de [Doctor Mike Diamonds](https://www.youtube.com/@DoctorMikeDiamonds).
+> *Práctica de Vue 3 Composition API con arquitectura escalable.*
+>
+> <br />
+>
+> **DEMO:** [samenufit.vercel.app](https://samenufit.vercel.app/)
 
-### 📅 **Planificación Semanal**
+---
 
-- Interfaz visual para programar comidas
-- Creacion aleatoria
-- Seguimiento del equilibrio nutricional
+### 01. ARCHITECTURE & DECISIONS
 
-### 🍲 **Gestión de Recetas**
+| COMPONENT | TECH | NOTE |
+| :--- | :--- | :--- |
+| **Core** | `Vue 3 (Composition API)` | Script Setup syntax. Screaming Architecture + DDD. |
+| **State** | `Pinia` | Stores por bounded context (recipes, weekly-plans). |
+| **Router** | `Vue Router 4` | SPA routing con lazy loading. |
+| **Styles** | `Tailwind CSS v4` | Utility-first con configuración custom. |
+| **Build** | `Vite` | Development server + HMR. |
+| **Runtime** | `Bun` | Package manager y task runner. |
+| **Storage** | `LocalStorage Adapter` | Persistencia de datos cliente. |
 
-- Crea y almacena tus recetas personalizadas
-- Información nutricional detallada
-- Importación y exportación de recetas
-
-### 🛒 **Listas de Compra Inteligentes**
-
-- Generación automática desde el plan semanal
-- Consolidación de ingredientes
-
-### 📊 **Seguimiento Nutricional**
-
-- Cálculo de macros y micronutrientes
-- Visualización de datos nutricionales
-
-## 🛠️ Stack Tecnológico
-
-| Tecnología       | Versión   | Propósito                              |
-| ---------------- | --------- | -------------------------------------- |
-| **Vue 3**        | `^3.5.18` | Framework frontend con Composition API |
-| **TypeScript**   | -         | Tipado estático y mejor DX             |
-| **Pinia**        | `^3.0.3`  | Gestión de estado                      |
-| **Vue Router**   | `^4.5.1`  | Enrutamiento SPA                       |
-| **Tailwind CSS** | `^4.1.12` | Estilos y diseño responsive            |
-| **Vite**         | -         | Herramienta de construcción            |
-| **Bun**          | -         | Gestor de paquetes ultrarrápido        |
-
-## 🏗️ Arquitectura
-
-SamenuFit implementa **Screaming Architecture** con principios de **Domain-Driven Design**:
-
+**Bounded Contexts:**
 ```
-📁 Contextos Delimitados
-├── 🍽️ meal-planning/     # Planificación de comidas
-├── 📚 recipes/           # Gestión de recetas
-├── 🛒 shopping-lists/    # Listas de compra
-└── 🔄 shared/           # Kernel compartido
+meal-planning/
+  ├── recipes/           → Gestión de recetas con macros
+  ├── weekly-plans/      → Planificación semanal + generación aleatoria
+  └── shopping-lists/    → Consolidación de ingredientes
 ```
 
-## 🚀 Inicio Rápido
+<br>
 
-### Requisitos Previos
+### 02. INSTALLATION
 
-- **Node.js**: `^20.19.0` o `>=22.12.0`
-- **Bun**: Gestor de paquetes
-
-### Instalación
+*Run local environment:*
 
 ```bash
-# 1. Clonar el repositorio
+# 1. Clone
 git clone https://github.com/samuhlo-training/samenufit.git
 cd samenufit
 
-# 2. Instalar dependencias
+# 2. Install dependencies (Bun enforced)
 bun install
 
-# 3. Iniciar servidor de desarrollo
+# 3. Ignite
 bun dev
 ```
 
-¡Listo! La aplicación estará disponible en `http://localhost:5173`
+### 03. KEY FEATURES / SNIPPETS
 
-## 📜 Comandos Disponibles
+#### A. WEEKLY PLAN COMPOSABLE
+Gestión reactiva del plan semanal con persistencia automática.
 
-```bash
-# Desarrollo
-bun dev                 # Servidor de desarrollo
-bun preview            # Vista previa de producción
+```typescript
+// useWeeklyPlan.ts - Estado compartido entre componentes
+import { useWeeklyPlanStore } from '../stores/weekly-plan-store'
 
-# Construcción
-bun run build          # Construcción para producción
-bun run type-check     # Verificación de tipos
-
-# Calidad de código
-bun lint               # Linter con corrección automática
-bun run format         # Formateo de código
+export const useWeeklyPlan = () => {
+  const store = useWeeklyPlanStore()
+  
+  const assignRecipe = (dayId: string, mealType: string, recipe: Recipe) => {
+    store.assignRecipe(dayId, mealType, recipe)
+  }
+  
+  return {
+    weeklyPlan: computed(() => store.weeklyPlan),
+    assignRecipe,
+    generateRandomPlan: () => store.generateRandomPlan(),
+  }
+}
 ```
 
-## 📂 Estructura del Proyecto
+#### B. SHOPPING LIST CONSOLIDATION
+Algoritmo de consolidación de ingredientes desde plan semanal.
 
+```typescript
+// useShoppingList.ts - Extracción y agrupación
+const generateFromWeeklyPlan = () => {
+  const plan = weeklyPlanStore.weeklyPlan
+  const ingredientMap = new Map<string, { amount: number; unit: string }>()
+  
+  plan.days.forEach(day => {
+    Object.values(day.meals).forEach(meal => {
+      if (meal.recipe) {
+        meal.recipe.ingredients.forEach(ing => {
+          // Consolidate same ingredients
+          const existing = ingredientMap.get(ing.name)
+          if (existing && existing.unit === ing.unit) {
+            existing.amount += ing.amount
+          } else {
+            ingredientMap.set(ing.name, { ...ing })
+          }
+        })
+      }
+    })
+  })
+  
+  return Array.from(ingredientMap.entries())
+}
 ```
-src/
-├── 🏠 app/
-│   ├── layout/         # Layouts principales
-│   └── pages/          # Páginas de la aplicación
-├── 🍽️ meal-planning/
-│   ├── recipes/        # Gestión de recetas
-│   ├── shopping-lists/ # Listas de compra
-│   └── weekly-plans/   # Planificación semanal
-├── 🔧 infrastructure/
-│   ├── router/         # Configuración de rutas
-│   └── storage/        # Adaptadores de almacenamiento
-├── 🤝 shared/
-│   ├── components/     # Componentes reutilizables
-│   ├── types/          # Tipos TypeScript
-│   └── utils/          # Utilidades
-└── 🎨 assets/          # Recursos estáticos
-```
-
-## 🔧 Entorno de Desarrollo
-
-### IDE Recomendado
-
-- **Visual Studio Code**
-- **Extensión**: [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (Vue Language Features)
-- ⚠️ **Desactivar**: Extensión Vetur (conflicto con Volar)
-
-### Configuración Adicional
-
-```bash
-# Configurar Git hooks (opcional)
-bun run prepare
-
-# Verificar configuración
-bun run type-check
-```
-
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Por favor:
-
-1. 🍴 Haz fork del repositorio
-2. 🌿 Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. ✅ Confirma tus cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. 📤 Sube la rama (`git push origin feature/nueva-funcionalidad`)
-5. 🔄 Abre un Pull Request
 
 <div align="center">
-  <p>Hecho con ❤️ por <a href="https://github.com/samuhlo"><span>samulo</span></a></p>
-  <p>
-    <a href="#-samenufit">⬆️ Volver arriba</a>
-  </p>
+
+<br />
+
+<code>DESIGNED & CODED BY @samuhlo</code>
+
+<br />
+
+<small>Lugo, Galicia</small>
+
 </div>
