@@ -20,7 +20,7 @@
 
 ---
 
-### 00. PREVIEW
+### 00 __ PREVIEW
 
 ![Hero Preview](portada-readme.webp)
 
@@ -37,7 +37,7 @@
 
 ---
 
-### 01. ARCHITECTURE & DECISIONS
+### 01 __ ARCHITECTURE & DECISIONS
 
 | COMPONENT | TECH | NOTE |
 | :--- | :--- | :--- |
@@ -59,7 +59,7 @@ meal-planning/
 
 <br>
 
-### 02. INSTALLATION
+### 02 __ INSTALLATION
 
 *Run local environment:*
 
@@ -75,7 +75,7 @@ bun install
 bun dev
 ```
 
-### 03. KEY FEATURES / SNIPPETS
+### 03 __ KEY FEATURES / SNIPPETS
 
 #### A. WEEKLY PLAN COMPOSABLE
 Gestión reactiva del plan semanal con persistencia automática.
@@ -132,7 +132,7 @@ const generateFromWeeklyPlan = () => {
 
 <br />
 
-<code>DESIGNED & CODED BY @samuhlo</code>
+<code>DESIGNED & CODED BY <a href='https://github.com/samuhlo'>samuhlo</a></code>
 
 <br />
 
